@@ -1,4 +1,6 @@
 class Api::V1::FriendsController < ApplicationController
+
+  # List all friends GET request
   def index
     friends = Friend.all
 
@@ -9,6 +11,7 @@ class Api::V1::FriendsController < ApplicationController
     end
   end
 
+  # Create new friend POST request
   def create 
     friend = Friend.new(friend_params)
 
@@ -23,6 +26,17 @@ class Api::V1::FriendsController < ApplicationController
 
   def friend_params 
     params.required(:friend).permit(:name, :location, :email, :twitter, :phone)  
+  end
+
+  # Show a specific friend GET request
+  def show 
+    friend = Friend.find(params[:id])
+
+    if friend
+      render json: { data: friend }, state: :ok
+    else 
+      render json: { message: "Friend could not be found" }, status: :bad_request
+    end
   end
   
 end
