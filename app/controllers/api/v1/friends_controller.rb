@@ -38,5 +38,16 @@ class Api::V1::FriendsController < ApplicationController
       render json: { message: "Friend could not be found" }, status: :bad_request
     end
   end
+
+  # Delete a specifict friend DELETE request
+  def destroy
+    friend = Freind.find(params[:id])
+
+    if friend.destroy!
+      render json: { message: "Friend was deleted successfully!"}, status: :ok  
+    else 
+      render json: { message: "Friends does not exist" }, status: :bad_request
+    
+  end
   
 end
